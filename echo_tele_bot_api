@@ -1,0 +1,19 @@
+import telebot;
+from telebot import types;
+
+API_TOKEN = 'your token';
+bot = telebot.TeleBot(API_TOKEN);
+
+@bot.message_handler(commands=["start"])
+def start(message):
+    keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True);
+    but_1 = types.KeyboardButton("I will repeat your text!");
+    keyboard.add(but_1);
+    but_1 = types.KeyboardButton("I will repeat your text!");
+    bot.send_message(message.chat.id, 'Hello, my dear friend {0.first_name}!'.format(message.from_user), reply_markup=keyboard);
+
+@bot.message_handler(func = lambda message:True)
+def echo(message):
+    bot.reply_to(message, message.text);
+
+bot.infinity_polling(none_stop=True);
